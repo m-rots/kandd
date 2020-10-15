@@ -1,16 +1,18 @@
 .container {
     display: flex;
-    margin: 10px;
+    height: 100vh;
 }
 
 .filters {
     min-width: 50%;
+    margin: 10px;
 }
 
 .posters {
     display: grid;
+    margin: 10px;
     width: 100%;
-    align-self: flex-end;
+    overflow-y: auto;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     column-gap: 10px;
     row-gap: 10px;

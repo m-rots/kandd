@@ -10,13 +10,15 @@ function getQuery(filters: string[]): string {
     PREFIX imn: <https://www.imdb.com/name/>
 
     SELECT ?film ?title ?year ?rating WHERE {
-      ?film imdb:rating ?rating .
       ?film imdb:title ?title .
       ?film imdb:year ?year .
+      ?film imdb:rating ?rating .
+      ?film imdb:votes ?votes .
+      FILTER (?votes >= 5000)
       ${filters.join(" .\n")}
     }
-    ORDER BY DESC(?year)
-    LIMIT 50
+    ORDER BY DESC(?rating)
+    LIMIT 18
   `).replace(/#/g, '%23');
 }
 
@@ -46,7 +48,5 @@ export const queryState = selector<string>({
     }
 
     return getQuery(filters)
-    
-    // console.log(data)
   }
 })

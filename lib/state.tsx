@@ -3,12 +3,12 @@ import { Film, Person } from 'interfaces';
 
 export const releaseYearState = atom({
   key: "releaseYear",
-  default: 0,
+  default: 2020,
 });
 
 export const minRatingState = atom({
   key: "minRating",
-  default: 7.5,
+  default: 5.0,
 });
 
 export const maxRatingState = atom({
@@ -23,10 +23,11 @@ export const filmsState = atom<Film[]>({
 
 export const directorsState = atom<Person[]>({
   key: "directors",
-  default: [
-    {
-      imdb: "nm0634240",
-      name: "Christopher Nolan",
-    },
-  ],
+  default: [],
+  // default: [
+  //   {
+  //     imdb: "nm0634240",
+  //     name: "Christopher Nolan",
+  //   },
+  // ],
 });
