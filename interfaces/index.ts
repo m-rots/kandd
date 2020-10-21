@@ -1,4 +1,5 @@
 export type Film = {
+  poster: string
   imdb: string
   title: string
 }

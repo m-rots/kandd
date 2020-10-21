@@ -6,19 +6,25 @@ function getQuery(filters: string[]): string {
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
+    PREFIX media: <https://m-rots.com/media#>
     PREFIX imdb: <https://www.imdb.com/interfaces/>
     PREFIX imn: <https://www.imdb.com/name/>
+    PREFIX tmdb: <https://developers.themoviedb.org/3#>
 
-    SELECT ?film ?title ?year ?rating WHERE {
+    SELECT DISTINCT ?imdb ?title ?poster WHERE {
+      ?film rdf:type media:Movie .
+      ?film imdb:id ?imdb .
       ?film imdb:title ?title .
       ?film imdb:year ?year .
       ?film imdb:rating ?rating .
-      ?film imdb:votes ?votes .
-      FILTER (?votes >= 5000)
+      ?film tmdb:poster ?poster .
       ${filters.join(" .\n")}
+      MINUS {
+        VALUES ?lang {"hi" "ml" "te" "ta" "tr" "ar" "kn" "ja" "si" } .
+        ?film tmdb:lang ?lang .
+      }
     }
     ORDER BY DESC(?rating)
-    LIMIT 18
   `).replace(/#/g, '%23');
 }
 

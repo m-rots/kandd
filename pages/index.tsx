@@ -13,12 +13,15 @@ import axios from 'axios';
 type Response = {
   results: {
     bindings: {
-      film: {
+      poster: {
         value: string
-      }
+      },
+      imdb: {
+        value: string
+      },
       title: {
         value: string
-      }
+      },
     }[]
   }
 }
@@ -31,9 +34,9 @@ const Home = () => {
     const { data } = await axios.get<Response>(`http://localhost:7200/repositories/imdb?query=${query}`)
     const films = data.results.bindings.map(
       (binding) => {
-        const parts = binding.film.value.split("/");
         const film: Film = {
-          imdb: parts[parts.length - 1],
+          poster: binding.poster.value,
+          imdb: binding.imdb.value,
           title: binding.title.value,
         }
 
@@ -63,7 +66,7 @@ const Home = () => {
       <div className={styles.posters}>
         {
           films.map(
-            (film) => <Poster imdb={film.imdb} title={film.title} key={film.imdb} />,
+            (film) => <Poster imdb={film.imdb} title={film.title} poster={film.poster} key={film.imdb} />,
           )
         }
       </div>
