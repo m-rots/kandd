@@ -27,11 +27,16 @@ const RatingFilter = () => {
   }
 
   return (
-    <span className={styles.block}>
-      with a minimum rating of <span className={styles.value}>{minRating}</span>
+    <>
+      <span className={styles.block}>
+        with a minimum rating of <span className={styles.value}>{minRating}</span>
+      </span>
       {' '}
-      and a maximum rating of <span className={styles.value}>{maxRating}</span>
-    </span>
+      <span className={styles.block}>
+        and a maximum rating of <span className={styles.value}>{maxRating}</span>
+      </span>
+    </>
+    
   )
 }
 

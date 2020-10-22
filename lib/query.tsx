@@ -20,11 +20,12 @@ function getQuery(filters: string[]): string {
       ?film tmdb:poster ?poster .
       ${filters.join(" .\n")}
       MINUS {
-        VALUES ?lang {"hi" "ml" "te" "ta" "tr" "ar" "kn" "ja" "si" } .
-        ?film tmdb:lang ?lang .
+        VALUES ?blacklist {"hi" "ml" "te" "ta" "tr" "ar" "kn" "ja" "si" "bn" "mr" } .
+        ?film tmdb:lang ?blacklist .
       }
     }
     ORDER BY DESC(?rating)
+    LIMIT 50
   `).replace(/#/g, '%23');
 }
 

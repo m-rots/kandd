@@ -44,7 +44,6 @@ const Home = () => {
       }
     )
 
-    console.log(films)
     setFilms(films);
   }
 
@@ -64,11 +63,13 @@ const Home = () => {
         <Summary />
       </div>
       <div className={styles.posters}>
-        {
-          films.map(
-            (film) => <Poster imdb={film.imdb} title={film.title} poster={film.poster} key={film.imdb} />,
-          )
-        }
+        <div className={styles.posterGrid}>
+          {
+            films.map(
+              (film) => <Poster imdb={film.imdb} title={film.title} poster={film.poster} key={film.imdb} />,
+            )
+          }
+        </div>
       </div>
     </div>
   )
