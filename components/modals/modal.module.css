@@ -1,0 +1,62 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 5px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  background-color: var(--purple);
+  max-width: 400px;
+  max-height: 600px;
+  width: 100%;
+  height: 100%;
+  border: 5px solid var(--deep-purple);
+  border-radius: 25px;
+  color: var(--deep-indigo);
+  box-shadow: 0 15px 50px var(--deep-indigo);
+}
+
+.content > h3 {
+  margin: 10px;
+  font-size: 20px;
+}
+
+.delete > button {
+  margin-top: 20px;
+
+  color: inherit;
+  font-size: 24px;
+  font-weight: 600;
+
+  border: 0;
+  padding: 5px 10px;
+  background: none;
+}
+
+.delete > button:hover {
+  cursor: pointer;
+  color: var(--red);
+}
+
+.content > button {
+  margin-top: auto;
+
+  color: var(--deep-purple);
+  font-size: 24px;
+  font-weight: 600;
+
+  border: 0;
+  padding: 10px;
+  background: none;
+}
+
+.content > button:hover {
+  cursor: pointer;
+  color: var(--deep-indigo);
+}

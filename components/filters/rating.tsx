@@ -1,10 +1,12 @@
-import { minRatingState, maxRatingState } from 'lib/state';
-import { useRecoilValue } from 'recoil';
+import { Modal } from 'interfaces';
+import { minRatingState, maxRatingState, modalState } from 'lib/state';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styles from './filter.module.css';
 
 const RatingFilter = () => {
   const minRating = useRecoilValue(minRatingState);
   const maxRating = useRecoilValue(maxRatingState);
+  const setModal = useSetRecoilState(modalState);
 
   if (!minRating && !maxRating) {
     return null
@@ -13,7 +15,7 @@ const RatingFilter = () => {
   if (!maxRating) {
     return (
       <span className={styles.block}>
-        with a minimum rating of <span className={styles.value}>{minRating}</span>
+        with a minimum rating of <span onClick={() => setModal(Modal.MinRating)} className={styles.value}>{minRating}</span>
       </span>
     )
   }
@@ -21,7 +23,7 @@ const RatingFilter = () => {
   if (!minRating) {
     return (
       <span className={styles.block}>
-        with a maximum rating of <span className={styles.value}>{maxRating}</span>
+        with a maximum rating of <span onClick={() => setModal(Modal.MaxRating)} className={styles.value}>{maxRating}</span>
       </span>
     )
   }
@@ -29,11 +31,11 @@ const RatingFilter = () => {
   return (
     <>
       <span className={styles.block}>
-        with a minimum rating of <span className={styles.value}>{minRating}</span>
+        with a minimum rating of <span onClick={() => setModal(Modal.MinRating)} className={styles.value}>{minRating}</span>
       </span>
       {' '}
       <span className={styles.block}>
-        and a maximum rating of <span className={styles.value}>{maxRating}</span>
+        and a maximum rating of <span onClick={() => setModal(Modal.MaxRating)} className={styles.value}>{maxRating}</span>
       </span>
     </>
     

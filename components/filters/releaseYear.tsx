@@ -1,21 +1,23 @@
-import { releaseYearState } from 'lib/state';
-import { useRecoilState } from 'recoil';
+import { Modal } from 'interfaces';
+import { modalState, releaseYearState } from 'lib/state';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styles from './filter.module.css';
 
 const ReleaseYearFilter = () => {
-  const [releaseYear, setReleaseYear] = useRecoilState(releaseYearState);
+  const releaseYear = useRecoilValue(releaseYearState);
+  const setModal = useSetRecoilState(modalState);
 
   if (!releaseYear) {
     return null
   }
 
   const onClick = () => {
-    setReleaseYear((cur) => cur - 1)
+    setModal(Modal.ReleaseYear);
   }
 
   return (
-    <span onClick={onClick} className={styles.block}>
-      released in <span className={styles.value}>{releaseYear}</span>
+    <span className={styles.block}>
+      released in <span onClick={onClick} className={styles.value}>{releaseYear}</span>
     </span>
   )
 }

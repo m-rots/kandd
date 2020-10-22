@@ -1,4 +1,4 @@
-import { atom, selector } from 'recoil';
+import { selector } from 'recoil';
 import { directorsState, maxRatingState, minRatingState, releaseYearState } from './state';
 
 function getQuery(filters: string[]): string {
@@ -20,12 +20,12 @@ function getQuery(filters: string[]): string {
       ?film tmdb:poster ?poster .
       ${filters.join(" .\n")}
       MINUS {
-        VALUES ?blacklist {"hi" "ml" "te" "ta" "tr" "ar" "kn" "ja" "si" "bn" "mr" } .
+        VALUES ?blacklist {"hi" "ml" "te" "ta" "tr" "ar" "kn" "ja" "si" "bn" "mr" "fa" "sr" } .
         ?film tmdb:lang ?blacklist .
       }
     }
     ORDER BY DESC(?rating)
-    LIMIT 50
+    LIMIT 100
   `).replace(/#/g, '%23');
 }
 

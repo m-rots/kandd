@@ -14,6 +14,8 @@ const Summary = () => {
 
   return (
     <div className={styles.summary}>
+      <h1 className={styles.title}>Netflix & Chill</h1>
+
       <span className={styles.text}>
         I am looking for a film{' '}
         {filters.map((FilterBlock, index) => {

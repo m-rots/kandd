@@ -1,0 +1,15 @@
+.range {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+  width: 100%;
+
+  font-size: 72px;  
+  font-weight: 600;
+}
+
+.range > input {
+  margin-top: 20px;
+  width: 100%;
+}

@@ -3,12 +3,13 @@ import styles from './index.module.css';
 
 import Summary from 'components/summary';
 import Poster from "components/poster";
+import CurrentModal from "components/modals";
 import { Film } from "interfaces";
 import { queryState } from "lib/query"
 import { filmsState } from "lib/state"
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useEffect } from 'react';
-import axios from 'axios';
+import axios, { CancelTokenSource } from 'axios';
 
 type Response = {
   results: {
@@ -30,37 +31,56 @@ const Home = () => {
   const [films, setFilms] = useRecoilState(filmsState)
   const query = useRecoilValue(queryState)
 
-  const loadFilms = async () => {
-    const { data } = await axios.get<Response>(`http://localhost:7200/repositories/imdb?query=${query}`)
-    const films = data.results.bindings.map(
-      (binding) => {
-        const film: Film = {
-          poster: binding.poster.value,
-          imdb: binding.imdb.value,
-          title: binding.title.value,
+  const loadFilms = (source: CancelTokenSource) => {
+    axios.get<Response>(`http://localhost:7200/repositories/imdb?query=${query}`, {
+      cancelToken: source.token,
+    }).then(({ data }) => {
+      const films = data.results.bindings.map(
+        (binding) => {
+          const film: Film = {
+            poster: binding.poster.value,
+            imdb: binding.imdb.value,
+            title: binding.title.value,
+          }
+  
+          return film
         }
-
-        return film
+      )
+  
+      setFilms(films);
+    })
+    .catch((err) => {
+      if (axios.isCancel(err)) {
+        console.log("dev: request cancelled")
+      } else {
+        throw err
       }
-    )
-
-    setFilms(films);
+    })
   }
 
   useEffect(() => {
-    loadFilms()
+    const source = axios.CancelToken.source()
+
+    const timeout = setTimeout(() => {
+      loadFilms(source)
+    }, 100)
+
+    return () => {
+      source.cancel()
+      clearTimeout(timeout)
+    }
   }, [query]);
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>Content Discovery</title>
+        <title>Netflix & Chill</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className={styles.filters}>
-        <h1>Netflix & Chill</h1>
         <Summary />
+        <CurrentModal />
       </div>
       <div className={styles.posters}>
         <div className={styles.posterGrid}>

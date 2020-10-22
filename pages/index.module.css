@@ -1,23 +1,29 @@
 .container {
-    display: flex;
-    height: 100vh;
+  display: flex;
+  height: 100vh;
 }
 
 .filters {
-    max-width: 650px;
-    width: 100%;
-    margin: 10px;
+  display: grid;
+  max-width: 650px;
+  width: 100%;
+  margin: 10px;
+}
+
+.filters > * {
+  grid-row: 1;
+  grid-column: 1;
 }
 
 .posters {
-    margin: 10px;
-    width: 100%;
-    overflow-y: auto;
+  margin: 10px;
+  width: 100%;
+  overflow-y: auto;
 }
 
 .posterGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18vmin, 1fr));
-    column-gap: 10px;
-    row-gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18vmin, 1fr));
+  column-gap: 10px;
+  row-gap: 10px;
 }

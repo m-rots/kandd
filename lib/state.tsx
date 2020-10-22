@@ -1,5 +1,10 @@
-import { atom, selector } from 'recoil';
-import { Film, Person } from 'interfaces';
+import { atom } from 'recoil';
+import { Film, Person, Modal } from 'interfaces';
+
+export const modalState = atom<Modal>({
+  key: "modal",
+  default: Modal.None,
+});
 
 export const releaseYearState = atom({
   key: "releaseYear",
