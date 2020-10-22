@@ -1,11 +1,12 @@
 .value {
-  color: #E8C1F4;
-}
-
-.block {
+  color: var(--purple);
   cursor: pointer; 
 }
 
-.block:hover, .block:hover > .value {
-  color: #B1E1DF;
+.block:hover {
+  color: var(--purple);
+}
+
+.value:hover {
+  color: var(--teal);
 }
