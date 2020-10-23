@@ -1,24 +1,29 @@
 import { atom } from 'recoil';
 import { Film, Person, Modal } from 'interfaces';
+import { StdRangeFilter } from 'interfaces/range';
 
 export const modalState = atom<Modal>({
   key: "modal",
   default: Modal.None,
 });
 
-export const releaseYearState = atom({
+export const releaseYearState = atom<StdRangeFilter>({
   key: "releaseYear",
-  default: 2020,
+  default: {
+    enabled: false,
+    value: 2020,
+  },
 });
 
-export const minRatingState = atom({
-  key: "minRating",
-  default: 5.0,
-});
-
-export const maxRatingState = atom({
-  key: "maxRating",
-  default: 10,
+export const ratingState = atom<StdRangeFilter>({
+  key: "rating",
+  default: {
+    enabled: false,
+    value: {
+      min: 1,
+      max: 10,
+    },
+  },
 });
 
 export const filmsState = atom<Film[]>({

@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { modalState } from 'lib/state';
 import { ReactNode } from 'react';
 import { useResetRecoilState } from 'recoil';
@@ -5,7 +6,7 @@ import { useResetRecoilState } from 'recoil';
 import styles from './modal.module.css';
 
 type Props = {
-  filter: string,
+  name: string,
   children: ReactNode,
   remove: () => void,
 }
@@ -19,16 +20,25 @@ const Modal = (props: Props) => {
   }
 
   return (
-    <div className={styles.container}>
+    <motion.div
+      className={styles.container}
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+    >
       <div className={styles.content}>
-        <h3>{props.filter}</h3>
+        <h3>{props.name}</h3>
         {props.children}
         <button onClick={() => closeModal()}>Close</button>
       </div>
-      <div className={styles.delete}>
+      <motion.div
+        className={styles.delete}
+        initial={{ y: -20 }}
+        animate={{ y: 0 }}
+      >
         <button onClick={removeFilter}>Remove filter</button>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 

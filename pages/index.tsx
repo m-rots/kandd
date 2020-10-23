@@ -50,9 +50,7 @@ const Home = () => {
       setFilms(films);
     })
     .catch((err) => {
-      if (axios.isCancel(err)) {
-        console.log("dev: request cancelled")
-      } else {
+      if (!axios.isCancel(err)) {
         throw err
       }
     })
@@ -63,7 +61,7 @@ const Home = () => {
 
     const timeout = setTimeout(() => {
       loadFilms(source)
-    }, 100)
+    }, 250)
 
     return () => {
       source.cancel()

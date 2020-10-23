@@ -1,23 +1,22 @@
+import { AnimatePresence } from 'framer-motion';
 import { Modal } from 'interfaces';
-import { modalState } from 'lib/state';
+import { modalState, ratingState, releaseYearState } from 'lib/state';
 import { useRecoilValue } from 'recoil';
-import MaxRatingModal from './maxRating';
-import MinRatingModal from './minRating';
-import ReleaseYearModal from './releaseYear';
+import RangeModal from './range';
 
 const CurrentModal = () => {
   const modal = useRecoilValue(modalState)
 
-  switch (modal) {
-    case Modal.ReleaseYear:
-      return <ReleaseYearModal />
-    case Modal.MinRating:
-      return <MinRatingModal />
-    case Modal.MaxRating:
-      return <MaxRatingModal />
-    default:
-      return null
-  }
+  return (
+    <AnimatePresence>
+      {modal == Modal.ReleaseYear && (
+        <RangeModal name="Release Year" state={releaseYearState} min={1932} max={2020} step={1} />
+      )}
+      {modal == Modal.Rating && (
+        <RangeModal name="Rating" state={ratingState} min={1} max={10} step={0.1} />
+      )}
+    </AnimatePresence>
+  )
 }
 
 export default CurrentModal;

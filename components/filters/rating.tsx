@@ -1,43 +1,42 @@
 import { Modal } from 'interfaces';
-import { minRatingState, maxRatingState, modalState } from 'lib/state';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { isNumber } from 'interfaces/range';
+import { modalState, ratingState } from 'lib/state';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import styles from './filter.module.css';
 
 const RatingFilter = () => {
-  const minRating = useRecoilValue(minRatingState);
-  const maxRating = useRecoilValue(maxRatingState);
+  const [rating, setRating] = useRecoilState(ratingState);
   const setModal = useSetRecoilState(modalState);
 
-  if (!minRating && !maxRating) {
+  if (!rating.enabled) {
     return null
   }
 
-  if (!maxRating) {
-    return (
-      <span className={styles.block}>
-        with a minimum rating of <span onClick={() => setModal(Modal.MinRating)} className={styles.value}>{minRating}</span>
-      </span>
-    )
+  const openModal = () => {
+    setModal(Modal.Rating)
+    setRating((cur) => ({
+      ...cur,
+      enabled: true,
+    }))
   }
 
-  if (!minRating) {
+  if (isNumber(rating)) {
     return (
       <span className={styles.block}>
-        with a maximum rating of <span onClick={() => setModal(Modal.MaxRating)} className={styles.value}>{maxRating}</span>
+        with a rating of <span onClick={openModal} className={styles.value}>{rating.value}</span>
       </span>
     )
   }
 
   return (
-    <>
       <span className={styles.block}>
-        with a minimum rating of <span onClick={() => setModal(Modal.MinRating)} className={styles.value}>{minRating}</span>
+        with a rating between
+        {' '}
+        <span onClick={openModal} className={styles.value}>{rating.value.min}</span>
+        {' and '}
+        <span onClick={openModal} className={styles.value}>{rating.value.max}</span>
       </span>
-      {' '}
-      <span className={styles.block}>
-        and a maximum rating of <span onClick={() => setModal(Modal.MaxRating)} className={styles.value}>{maxRating}</span>
-      </span>
-    </>
+      
     
   )
 }

@@ -1,0 +1,23 @@
+.button {
+  cursor: pointer;
+
+  color: var(--deep-indigo);
+  font-weight: 600;
+  font-size: 16px;
+
+  padding: 10px 15px;
+  background: var(--beige);
+  border-radius: 8px;
+  border: 0;
+  
+  margin: 5px;
+}
+
+.button:hover:enabled {
+  color: var(--beige);
+  background: var(--deep-indigo);
+}
+
+.inactive {
+  cursor: default;
+}

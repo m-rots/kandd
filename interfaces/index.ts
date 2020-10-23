@@ -9,14 +9,8 @@ export type Person = {
   name: string
 }
 
-export type Filter = {
-  label: string
-  values: string[]
-}
-
 export enum Modal {
   None,
   ReleaseYear,
-  MinRating,
-  MaxRating,
+  Rating,
 }
