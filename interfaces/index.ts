@@ -4,13 +4,10 @@ export type Film = {
   title: string
 }
 
-export type Person = {
-  imdb: string
-  name: string
-}
-
 export enum Modal {
   None,
+  Actor,
+  Director,
   Rating,
   ReleaseYear,
   Runtime,

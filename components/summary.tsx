@@ -3,12 +3,16 @@ import styles from './summary.module.css';
 import ReleaseYear from 'components/filters/releaseYear';
 import Rating from 'components/filters/rating';
 import Runtime from 'components/filters/runtime';
-import DirectedBy from 'components/filters/directedBy';
+import ActorsFilter from './filters/actors';
+import DirectorsFilter from 'components/filters/directors';
 import { Fragment } from 'react';
-import FilterButton from './filterButton';
+import RangeAddition from './additions/range';
+import PersonAddition from './additions/person';
 import { useRecoilValue } from 'recoil';
 import { Modal } from 'interfaces';
 import {
+  actorState,
+  directorState,
   modalState,
   ratingState,
   releaseYearState,
@@ -25,7 +29,8 @@ const Summary = () => {
   }
 
   const filters = [
-    DirectedBy,
+    ActorsFilter,
+    DirectorsFilter,
     Rating,
     ReleaseYear,
     Runtime,
@@ -50,9 +55,11 @@ const Summary = () => {
       </span>
 
       <div className={className}>
-        <FilterButton state={ratingState} modal={Modal.Rating}>Rating</FilterButton>
-        <FilterButton state={releaseYearState} modal={Modal.ReleaseYear}>Release Year</FilterButton>
-        <FilterButton state={runtimeState} modal={Modal.Runtime}>Runtime</FilterButton>
+        <PersonAddition state={actorState} modal={Modal.Actor}>Actor</PersonAddition>
+        <PersonAddition state={directorState} modal={Modal.Director}>Director</PersonAddition>
+        <RangeAddition state={ratingState} modal={Modal.Rating}>Rating</RangeAddition>
+        <RangeAddition state={releaseYearState} modal={Modal.ReleaseYear}>Release Year</RangeAddition>
+        <RangeAddition state={runtimeState} modal={Modal.Runtime}>Runtime</RangeAddition>
       </div>
     </div>
   );

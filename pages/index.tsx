@@ -5,7 +5,7 @@ import Summary from 'components/summary';
 import Poster from "components/poster";
 import CurrentModal from "components/modals";
 import { Film } from "interfaces";
-import { queryState } from "lib/query"
+import mainQueryState from "lib/queries/main"
 import { filmsState } from "lib/state"
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useEffect } from 'react';
@@ -30,7 +30,7 @@ type Response = {
 
 const Home = () => {
   const [films, setFilms] = useRecoilState(filmsState)
-  const query = useRecoilValue(queryState)
+  const query = useRecoilValue(mainQueryState)
 
   const loadFilms = (trackID: string, source: CancelTokenSource) => {
     axios.get<Response>(`http://localhost:7200/repositories/imdb?query=${query}`, {
@@ -75,14 +75,19 @@ const Home = () => {
     const source = axios.CancelToken.source()
     const trackID = `kandd-${nanoid()}`;
 
+    let sent = false;
+
     const timeout = setTimeout(() => {
+      sent = true;
       loadFilms(trackID, source)
-    }, 250)
+    }, 100)
 
     return () => {
       clearTimeout(timeout)
       source.cancel()
-      cancelQuery(trackID);
+      if (sent) {
+        cancelQuery(trackID);
+      }
     }
   }, [query]);
 

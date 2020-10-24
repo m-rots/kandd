@@ -1,7 +1,8 @@
 import { isNumber, isRange } from 'interfaces/range';
 import { selector } from 'recoil';
 import {
-  directorsState,
+  actorState,
+  directorState,
   ratingState,
   releaseYearState,
   runtimeState,
@@ -36,15 +37,21 @@ function getQuery(filters: string[]): string {
   `).replace(/#/g, '%23');
 }
 
-export const queryState = selector<string>({
+const mainQuery = selector<string>({
   key: 'query',
   get: ({ get }) => {
     const filters = [];
 
+    // Actors
+    const actors = get(actorState);
+    actors.value.forEach(({ imdb }) => {
+      filters.push(`{ ?film media:has_actress imn:${imdb} } UNION { ?film media:has_actor imn:${imdb}}`)
+    })
+
     // Directors
-    const directors = get(directorsState);
-    directors.forEach((director) => {
-      filters.push(`?film imdb:director imn:${director.imdb}`)
+    const directors = get(directorState);
+    directors.value.forEach(({ imdb }) => {
+      filters.push(`?film imdb:director imn:${imdb}`)
     })
 
     // Rating
@@ -83,3 +90,5 @@ export const queryState = selector<string>({
     return getQuery(filters)
   }
 })
+
+export default mainQuery;

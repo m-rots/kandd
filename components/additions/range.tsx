@@ -3,7 +3,7 @@ import { StdRangeFilter } from 'interfaces/range';
 import { modalState } from 'lib/state';
 import { ReactNode } from 'react';
 import { RecoilState, useRecoilState } from 'recoil';
-import styles from './filterButton.module.css';
+import styles from './addition.module.css';
 
 type Props = {
   children: ReactNode,
@@ -11,7 +11,7 @@ type Props = {
   state: RecoilState<StdRangeFilter>,
 }
 
-const FilterButton = (props: Props) => {
+const RangeAddition = (props: Props) => {
   const [state, setState] = useRecoilState(props.state);
   const [modal, setModal] = useRecoilState(modalState);
   const modalActive = modal != Modal.None;
@@ -40,4 +40,4 @@ const FilterButton = (props: Props) => {
   )
 }
 
-export default FilterButton;
+export default RangeAddition;

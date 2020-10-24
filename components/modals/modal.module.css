@@ -4,6 +4,8 @@
   align-items: center;
   flex-direction: column;
   margin: 0 5px;
+
+  overflow: hidden;
 }
 
 .content {
@@ -20,6 +22,8 @@
   border-radius: 25px;
   color: var(--deep-indigo);
   box-shadow: 0 15px 50px var(--deep-indigo);
+
+  overflow: hidden;
 }
 
 .content > h3 {

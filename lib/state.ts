@@ -1,6 +1,7 @@
 import { atom } from 'recoil';
-import { Film, Person, Modal } from 'interfaces';
+import { Film, Modal } from 'interfaces';
 import { StdRangeFilter } from 'interfaces/range';
+import { Persons } from 'interfaces/multiple';
 
 export const modalState = atom<Modal>({
   key: "modal",
@@ -10,17 +11,6 @@ export const modalState = atom<Modal>({
 export const filmsState = atom<Film[]>({
   key: "films",
   default: [],
-});
-
-export const directorsState = atom<Person[]>({
-  key: "directors",
-  default: [],
-  // default: [
-  //   {
-  //     imdb: "nm0634240",
-  //     name: "Christopher Nolan",
-  //   },
-  // ],
 });
 
 export const releaseYearState = atom<StdRangeFilter>({
@@ -52,3 +42,19 @@ export const runtimeState = atom<StdRangeFilter>({
     },
   },
 });
+
+export const actorState = atom<Persons>({
+  key: "actors",
+  default: {
+    selected: "",
+    value: [],
+  },
+})
+
+export const directorState = atom<Persons>({
+  key: "directors",
+  default: {
+    selected: "",
+    value: [],
+  },
+})
