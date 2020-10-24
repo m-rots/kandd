@@ -7,6 +7,22 @@ export const modalState = atom<Modal>({
   default: Modal.None,
 });
 
+export const filmsState = atom<Film[]>({
+  key: "films",
+  default: [],
+});
+
+export const directorsState = atom<Person[]>({
+  key: "directors",
+  default: [],
+  // default: [
+  //   {
+  //     imdb: "nm0634240",
+  //     name: "Christopher Nolan",
+  //   },
+  // ],
+});
+
 export const releaseYearState = atom<StdRangeFilter>({
   key: "releaseYear",
   default: {
@@ -26,18 +42,13 @@ export const ratingState = atom<StdRangeFilter>({
   },
 });
 
-export const filmsState = atom<Film[]>({
-  key: "films",
-  default: [],
-});
-
-export const directorsState = atom<Person[]>({
-  key: "directors",
-  default: [],
-  // default: [
-  //   {
-  //     imdb: "nm0634240",
-  //     name: "Christopher Nolan",
-  //   },
-  // ],
+export const runtimeState = atom<StdRangeFilter>({
+  key: "runtime",
+  default: {
+    enabled: false,
+    value: {
+      min: 60,
+      max: 120,
+    },
+  },
 });

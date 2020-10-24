@@ -1,6 +1,11 @@
 import { isNumber, isRange } from 'interfaces/range';
 import { selector } from 'recoil';
-import { directorsState, ratingState, releaseYearState } from './state';
+import {
+  directorsState,
+  ratingState,
+  releaseYearState,
+  runtimeState,
+} from 'lib/state';
 
 function getQuery(filters: string[]): string {
   return encodeURI(`
@@ -18,6 +23,7 @@ function getQuery(filters: string[]): string {
       ?film imdb:title ?title .
       ?film imdb:year ?year .
       ?film imdb:rating ?rating .
+      ?film imdb:runtime ?runtime .
       ?film tmdb:poster ?poster .
       ${filters.join(" .\n")}
       MINUS {
@@ -35,11 +41,24 @@ export const queryState = selector<string>({
   get: ({ get }) => {
     const filters = [];
 
+    // Directors
     const directors = get(directorsState);
     directors.forEach((director) => {
       filters.push(`?film imdb:director imn:${director.imdb}`)
     })
 
+    // Rating
+    const rating = get(ratingState);
+    if (rating.enabled && isNumber(rating)) {
+      filters.push(`FILTER (?rating = "${rating.value}"^^xsd:decimal)`)
+    }
+
+    if (rating.enabled && isRange(rating)) {
+      filters.push(`FILTER (?rating >= "${rating.value.min}"^^xsd:decimal)`)
+      filters.push(`FILTER (?rating <= "${rating.value.max}"^^xsd:decimal)`)
+    }
+
+    // Release Year
     const releaseYear = get(releaseYearState);
     if (releaseYear.enabled && isNumber(releaseYear)) {
       filters.push(`FILTER (?year = "${releaseYear.value}"^^xsd:decimal)`)
@@ -50,14 +69,15 @@ export const queryState = selector<string>({
       filters.push(`FILTER (?year <= "${releaseYear.value.max}"^^xsd:decimal)`)
     }
 
-    const rating = get(ratingState);
-    if (rating.enabled && isNumber(rating)) {
-      filters.push(`FILTER (?rating = "${rating.value}"^^xsd:decimal)`)
+    // Runtime
+    const runtime = get(runtimeState);
+    if (runtime.enabled && isNumber(runtime)) {
+      filters.push(`FILTER (?runtime = "${runtime.value}"^^xsd:decimal)`)
     }
 
-    if (rating.enabled && isRange(rating)) {
-      filters.push(`FILTER (?rating >= "${rating.value.min}"^^xsd:decimal)`)
-      filters.push(`FILTER (?rating <= "${rating.value.max}"^^xsd:decimal)`)
+    if (runtime.enabled && isRange(runtime)) {
+      filters.push(`FILTER (?runtime >= "${runtime.value.min}"^^xsd:decimal)`)
+      filters.push(`FILTER (?runtime <= "${runtime.value.max}"^^xsd:decimal)`)
     }
 
     return getQuery(filters)

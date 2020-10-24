@@ -2,7 +2,7 @@ import { Modal } from 'interfaces';
 import { StdRangeFilter } from 'interfaces/range';
 import { modalState } from 'lib/state';
 import { ReactNode } from 'react';
-import { RecoilState, useRecoilState, useSetRecoilState } from 'recoil';
+import { RecoilState, useRecoilState } from 'recoil';
 import styles from './filterButton.module.css';
 
 type Props = {
@@ -12,10 +12,9 @@ type Props = {
 }
 
 const FilterButton = (props: Props) => {
+  const [state, setState] = useRecoilState(props.state);
   const [modal, setModal] = useRecoilState(modalState);
   const modalActive = modal != Modal.None;
-
-  const setState = useSetRecoilState(props.state);
 
   let className = styles.button;
   if (modalActive) {
@@ -28,6 +27,10 @@ const FilterButton = (props: Props) => {
       ...cur,
       enabled: true,
     }))
+  }
+
+  if (state.enabled) {
+    return null
   }
 
   return (

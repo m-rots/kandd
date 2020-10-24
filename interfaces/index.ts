@@ -11,6 +11,7 @@ export type Person = {
 
 export enum Modal {
   None,
-  ReleaseYear,
   Rating,
+  ReleaseYear,
+  Runtime,
 }

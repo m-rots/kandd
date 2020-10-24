@@ -2,12 +2,18 @@ import styles from './summary.module.css';
 
 import ReleaseYear from 'components/filters/releaseYear';
 import Rating from 'components/filters/rating';
+import Runtime from 'components/filters/runtime';
 import DirectedBy from 'components/filters/directedBy';
 import { Fragment } from 'react';
 import FilterButton from './filterButton';
 import { useRecoilValue } from 'recoil';
-import { modalState, ratingState, releaseYearState } from 'lib/state';
 import { Modal } from 'interfaces';
+import {
+  modalState,
+  ratingState,
+  releaseYearState,
+  runtimeState,
+} from 'lib/state';
 
 const Summary = () => {
   const modal = useRecoilValue(modalState);
@@ -19,9 +25,10 @@ const Summary = () => {
   }
 
   const filters = [
-    ReleaseYear,
     DirectedBy,
     Rating,
+    ReleaseYear,
+    Runtime,
   ];
 
   return (
@@ -29,21 +36,23 @@ const Summary = () => {
       <h1 className={styles.title}>Netflix & Chill</h1>
 
       <span className={styles.text}>
-        I am looking for a film{' '}
+        I am looking for a film
         {filters
           .filter((filter) => filter() != null)
           .map((FilterBlock, index, me) => {
             return (
               <Fragment key={index}>
-                <FilterBlock />{index == me.length - 1 ? '.' : ', '}
+                {' '}<FilterBlock />{index == me.length - 1 ? '' : ','}
               </Fragment>
             )
           })}
+          .
       </span>
 
       <div className={className}>
-        <FilterButton state={releaseYearState} modal={Modal.ReleaseYear}>Release Year</FilterButton>
         <FilterButton state={ratingState} modal={Modal.Rating}>Rating</FilterButton>
+        <FilterButton state={releaseYearState} modal={Modal.ReleaseYear}>Release Year</FilterButton>
+        <FilterButton state={runtimeState} modal={Modal.Runtime}>Runtime</FilterButton>
       </div>
     </div>
   );

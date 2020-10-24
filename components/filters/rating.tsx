@@ -29,15 +29,10 @@ const RatingFilter = () => {
   }
 
   return (
-      <span className={styles.block}>
-        with a rating between
-        {' '}
-        <span onClick={openModal} className={styles.value}>{rating.value.min}</span>
-        {' and '}
-        <span onClick={openModal} className={styles.value}>{rating.value.max}</span>
-      </span>
-      
-    
+    <span className={styles.block}>
+      with a rating between
+      <span onClick={openModal} className={styles.value}> {rating.value.min} and {rating.value.max}</span>
+    </span>
   )
 }
 
