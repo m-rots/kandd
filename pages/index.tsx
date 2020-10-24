@@ -10,6 +10,7 @@ import { filmsState } from "lib/state"
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useEffect } from 'react';
 import axios, { CancelTokenSource } from 'axios';
+import { nanoid } from 'nanoid';
 
 type Response = {
   results: {
@@ -31,9 +32,12 @@ const Home = () => {
   const [films, setFilms] = useRecoilState(filmsState)
   const query = useRecoilValue(queryState)
 
-  const loadFilms = (source: CancelTokenSource) => {
+  const loadFilms = (trackID: string, source: CancelTokenSource) => {
     axios.get<Response>(`http://localhost:7200/repositories/imdb?query=${query}`, {
       cancelToken: source.token,
+      headers: {
+        'X-GraphDB-Track-Alias': trackID,
+      },
     }).then(({ data }) => {
       const films = data.results.bindings.map(
         (binding) => {
@@ -56,16 +60,29 @@ const Home = () => {
     })
   }
 
+  const cancelQuery = (trackID: string) => {
+    axios.delete("http://localhost:7200/rest/monitor/query", {
+      params: {
+        queryAlias: trackID,
+      },
+      headers: {
+        'X-GraphDB-Repository': 'imdb',
+      },
+    })
+  }
+
   useEffect(() => {
     const source = axios.CancelToken.source()
+    const trackID = `kandd-${nanoid()}`;
 
     const timeout = setTimeout(() => {
-      loadFilms(source)
+      loadFilms(trackID, source)
     }, 250)
 
     return () => {
-      source.cancel()
       clearTimeout(timeout)
+      source.cancel()
+      cancelQuery(trackID);
     }
   }, [query]);
 
