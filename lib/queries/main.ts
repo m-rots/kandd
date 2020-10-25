@@ -11,32 +11,30 @@ import {
 } from 'lib/state';
 
 function getQuery(filters: string[]): string {
-  return encodeURI(`
-    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+  return `PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-    PREFIX media: <https://m-rots.com/media#>
-    PREFIX imdb: <https://www.imdb.com/interfaces/>
-    PREFIX imn: <https://www.imdb.com/name/>
-    PREFIX tmdb: <https://developers.themoviedb.org/3#>
+PREFIX media: <https://m-rots.com/media#>
+PREFIX imdb: <https://www.imdb.com/interfaces/>
+PREFIX imn: <https://www.imdb.com/name/>
+PREFIX tmdb: <https://developers.themoviedb.org/3#>
 
-    SELECT DISTINCT ?imdb ?title ?poster WHERE {
-      ?film rdf:type media:Movie .
-      ?film media:full_title ?title .
-      ?film media:release_year ?year .
-      ?film media:runtime ?runtime .
-      ?film imdb:id ?imdb .
-      ?film imdb:rating ?rating .
-      ?film tmdb:poster ?poster .
-      ${filters.join(" .\n")}
-      MINUS {
-        VALUES ?blacklist {"hi" "ml" "te" "ta" "tr" "ar" "kn" "ja" "si" "bn" "mr" "fa" "sr" } .
-        ?film tmdb:lang ?blacklist .
-      }
-    }
-    ORDER BY DESC(?rating) DESC(?year)
-    LIMIT 100
-  `).replace(/#/g, '%23');
+SELECT DISTINCT ?imdb ?title ?poster WHERE {
+  ?film rdf:type media:Movie .
+  ?film media:full_title ?title .
+  ?film media:release_year ?year .
+  ?film media:runtime ?runtime .
+  ?film imdb:id ?imdb .
+  ?film imdb:rating ?rating .
+  ?film tmdb:poster ?poster .
+  ${filters.join(" .\n  ")}
+  MINUS {
+    VALUES ?blacklist {"hi" "ml" "te" "ta" "tr" "ar" "kn" "ja" "si" "bn" "mr" "fa" "sr" } .
+    ?film tmdb:lang ?blacklist .
+  }
+}
+ORDER BY DESC(?rating) DESC(?year)
+LIMIT 100`
 }
 
 const mainQuery = selector<string>({

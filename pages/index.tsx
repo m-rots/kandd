@@ -34,11 +34,16 @@ const Home = () => {
   const query = useRecoilValue(mainQueryState)
 
   const loadFilms = (trackID: string, source: CancelTokenSource) => {
+    console.log(query);
     setLoading(true);
-    axios.get<Response>(`http://localhost:7200/repositories/imdb?query=${query}`, {
+
+    axios.get<Response>("http://localhost:7200/repositories/imdb", {
       cancelToken: source.token,
       headers: {
         'X-GraphDB-Track-Alias': trackID,
+      },
+      params: {
+        query,
       },
     }).then(({ data }) => {
       const films = data.results.bindings.map(
