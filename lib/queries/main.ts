@@ -2,7 +2,9 @@ import { isNumber, isRange } from 'interfaces/range';
 import { selector } from 'recoil';
 import {
   actorState,
+  awardedState,
   directorState,
+  femaleInclusiveState,
   ratingState,
   releaseYearState,
   runtimeState,
@@ -41,6 +43,18 @@ const mainQuery = selector<string>({
   key: 'query',
   get: ({ get }) => {
     const filters = [];
+
+    // Awarded
+    const awarded = get(awardedState);
+    if (awarded) {
+      filters.push(`?film rdf:type media:AwardedMovie`)
+    }
+
+    // Female Inclusive
+    const femaleInclusive = get(femaleInclusiveState);
+    if (femaleInclusive) {
+      filters.push(`?film rdf:type media:FemaleInclusiveMovie`)
+    }
 
     // Actors
     const actors = get(actorState);

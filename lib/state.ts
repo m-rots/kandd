@@ -63,3 +63,13 @@ export const directorState = atom<Persons>({
     value: [],
   },
 })
+
+export const awardedState = atom<boolean>({
+  key: "awarded",
+  default: false,
+})
+
+export const femaleInclusiveState = atom<boolean>({
+  key: "femaleInclusive",
+  default: false,
+})

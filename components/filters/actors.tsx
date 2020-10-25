@@ -1,5 +1,6 @@
 import { Modal } from 'interfaces';
 import { actorState, modalState } from 'lib/state';
+import { seperator } from 'lib/util';
 import { Fragment } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import styles from './filter.module.css';
@@ -10,18 +11,6 @@ const ActorsFilter = () => {
 
   if (actors.value.length == 0) {
     return null
-  }
-
-  const seperator = (index: number): string => {
-    if (index == actors.value.length - 2) {
-      return " and "
-    }
-
-    if (index < actors.value.length - 2) {
-      return ", "
-    }
-
-    return ""
   }
 
   const openModal = (imdb: string) => {
@@ -39,7 +28,7 @@ const ActorsFilter = () => {
       {actors.value.map(({ imdb, name }, index) => (
         <Fragment key={imdb}>
           <span onClick={() => openModal(imdb)} className={styles.value}>{name}</span>
-          {seperator(index)}
+          {seperator(actors.value.length, index)}
         </Fragment>
       ))}
     </span>

@@ -1,4 +1,4 @@
-.value {
+.value, .removable  {
   color: var(--purple);
   cursor: pointer; 
 }
@@ -9,4 +9,8 @@
 
 .value:hover {
   color: var(--teal);
+}
+
+.removable:hover {
+  color: var(--red);
 }

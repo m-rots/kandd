@@ -4,6 +4,8 @@ import ReleaseYear from 'components/filters/releaseYear';
 import Rating from 'components/filters/rating';
 import Runtime from 'components/filters/runtime';
 import ActorsFilter from './filters/actors';
+import PropertiesFilter from './filters/properties';
+import PropertyAddition from './additions/property';
 import DirectorsFilter from 'components/filters/directors';
 import { Fragment } from 'react';
 import RangeAddition from './additions/range';
@@ -12,7 +14,9 @@ import { useRecoilValue } from 'recoil';
 import { Modal } from 'interfaces';
 import {
   actorState,
+  awardedState,
   directorState,
+  femaleInclusiveState,
   modalState,
   ratingState,
   releaseYearState,
@@ -29,6 +33,7 @@ const Summary = () => {
   }
 
   const filters = [
+    PropertiesFilter,
     ActorsFilter,
     DirectorsFilter,
     Rating,
@@ -58,7 +63,9 @@ const Summary = () => {
         <span>Add some <i>spicy</i> restrictions</span>
         <div className={styles.additions}>
           <PersonAddition state={actorState} modal={Modal.Actor}>Actor</PersonAddition>
+          <PropertyAddition state={awardedState}>Awarded</PropertyAddition>
           <PersonAddition state={directorState} modal={Modal.Director}>Director</PersonAddition>
+          <PropertyAddition state={femaleInclusiveState}>Female Inclusive</PropertyAddition>
           <RangeAddition state={ratingState} modal={Modal.Rating}>Rating</RangeAddition>
           <RangeAddition state={releaseYearState} modal={Modal.ReleaseYear}>Release Year</RangeAddition>
           <RangeAddition state={runtimeState} modal={Modal.Runtime}>Runtime</RangeAddition>
