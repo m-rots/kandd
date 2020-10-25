@@ -5,6 +5,7 @@ import {
   awardedState,
   directorState,
   femaleInclusiveState,
+  genreState,
   ratingState,
   releaseYearState,
   runtimeState,
@@ -64,6 +65,12 @@ const mainQuery = selector<string>({
     const directors = get(directorState);
     directors.value.forEach(({ imdb }) => {
       filters.push(`?film media:has_director imn:${imdb}`)
+    })
+
+    // Genres
+    const genres = get(genreState);
+    genres.value.forEach((genre) => {
+      filters.push(`?film rdf:type media:${genre}Movie`)
     })
 
     // Rating

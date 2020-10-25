@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 import { Film, Modal } from 'interfaces';
 import { StdRangeFilter } from 'interfaces/range';
-import { Persons } from 'interfaces/multiple';
+import { Multiple, Persons } from 'interfaces/multiple';
 
 export const modalState = atom<Modal>({
   key: "modal",
@@ -73,3 +73,11 @@ export const femaleInclusiveState = atom<boolean>({
   key: "femaleInclusive",
   default: false,
 })
+
+export const genreState = atom<Multiple>({
+  key: "genres",
+  default: {
+    selected: "",
+    value: [],
+  },
+});

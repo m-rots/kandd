@@ -1,12 +1,14 @@
 import { AnimatePresence } from 'framer-motion';
-import { Modal } from 'interfaces';
+import { Genres, Modal } from 'interfaces';
 import { directorResultsState, directorSearchState } from 'lib/queries/directors';
 import { useRecoilValue } from 'recoil';
 import RangeModal from './range';
 import PersonModal from './person';
+import MultipleModal from './multiple';
 import {
   actorState,
   directorState,
+  genreState,
   modalState,
   ratingState,
   releaseYearState,
@@ -42,6 +44,14 @@ const CurrentModal = () => {
           state={directorState}
           searchState={directorSearchState}
           resultState={directorResultsState}
+        />
+      )}
+      {modal === Modal.Genre && (
+        <MultipleModal
+          name="Genre"
+          state={genreState}
+          values={Genres}
+          space
         />
       )}
     </AnimatePresence>

@@ -9,3 +9,7 @@ export const seperator = (length: number, index: number): string => {
 
   return ""
 }
+
+export const withSpace = (word: string): string => {
+  return word.replace(/([A-Z])/g, " $1").trim();
+}
