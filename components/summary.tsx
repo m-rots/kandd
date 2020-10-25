@@ -13,6 +13,7 @@ import RangeAddition from './additions/range';
 import PersonAddition from './additions/person';
 import MultipleAddition from './additions/multiple';
 import { useRecoilValue } from 'recoil';
+import { seperator } from 'lib/util';
 import { Modal } from 'interfaces';
 import {
   actorState,
@@ -39,8 +40,8 @@ const Summary = () => {
     PropertiesFilter,
     ActorsFilter,
     DirectorsFilter,
-    Rating,
     ReleaseYear,
+    Rating,
     Runtime,
   ];
 
@@ -50,12 +51,13 @@ const Summary = () => {
 
       <span className={styles.text}>
         I am looking for a<GenresFilter /> film
+        {' '}
         {filters
           .filter((filter) => filter() != null)
           .map((FilterBlock, index, me) => {
             return (
               <Fragment key={index}>
-                {' '}<FilterBlock />{index == me.length - 1 ? '' : ','}
+                <FilterBlock />{seperator(me.length, index)}
               </Fragment>
             )
           })}

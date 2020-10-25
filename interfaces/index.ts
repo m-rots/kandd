@@ -34,7 +34,6 @@ export const Genres = [
   "Romance",
   "ScienceFiction",
   "Sport",
-  "Superhero",
   "Thriller",
   "War",
   "Western",

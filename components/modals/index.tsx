@@ -28,7 +28,7 @@ const CurrentModal = () => {
         <RangeModal name="Release Year" state={releaseYearState} min={1932} max={2020} step={1} />
       )}
       {modal == Modal.Runtime && (
-        <RangeModal name="Runtime" state={runtimeState} min={1} max={200} step={1} />
+        <RangeModal name="Runtime" state={runtimeState} min={1} max={247} step={1} />
       )}
       {modal == Modal.Actor && (
         <PersonModal

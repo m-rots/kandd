@@ -30,12 +30,12 @@ SELECT DISTINCT ?imdb ?title ?poster WHERE {
   ?film tmdb:poster ?poster .
   ${filters.join(" .\n  ")}
   MINUS {
-    VALUES ?blacklist {"hi" "ml" "te" "ta" "tr" "ar" "kn" "ja" "si" "bn" "mr" "fa" "sr" } .
+    VALUES ?blacklist {"hi" "ml" "te" "ta" "tr" "ar" "kn" "ja" "si" "bn" "mr" "fa" "sr" "ru" } .
     ?film tmdb:lang ?blacklist .
   }
 }
 ORDER BY DESC(?rating) DESC(?year)
-LIMIT 100`
+LIMIT 250`
 }
 
 const mainQuery = selector<string>({
