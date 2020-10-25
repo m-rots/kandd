@@ -55,11 +55,14 @@ const Summary = () => {
       </span>
 
       <div className={className}>
-        <PersonAddition state={actorState} modal={Modal.Actor}>Actor</PersonAddition>
-        <PersonAddition state={directorState} modal={Modal.Director}>Director</PersonAddition>
-        <RangeAddition state={ratingState} modal={Modal.Rating}>Rating</RangeAddition>
-        <RangeAddition state={releaseYearState} modal={Modal.ReleaseYear}>Release Year</RangeAddition>
-        <RangeAddition state={runtimeState} modal={Modal.Runtime}>Runtime</RangeAddition>
+        <span>Add some <i>spicy</i> restrictions</span>
+        <div className={styles.additions}>
+          <PersonAddition state={actorState} modal={Modal.Actor}>Actor</PersonAddition>
+          <PersonAddition state={directorState} modal={Modal.Director}>Director</PersonAddition>
+          <RangeAddition state={ratingState} modal={Modal.Rating}>Rating</RangeAddition>
+          <RangeAddition state={releaseYearState} modal={Modal.ReleaseYear}>Release Year</RangeAddition>
+          <RangeAddition state={runtimeState} modal={Modal.Runtime}>Runtime</RangeAddition>
+        </div>
       </div>
     </div>
   );

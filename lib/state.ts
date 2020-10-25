@@ -13,6 +13,11 @@ export const filmsState = atom<Film[]>({
   default: [],
 });
 
+export const loadingState = atom<boolean>({
+  key: "loadingFilms",
+  default: false,
+});
+
 export const releaseYearState = atom<StdRangeFilter>({
   key: "releaseYear",
   default: {

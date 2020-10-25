@@ -13,15 +13,25 @@
 }
 
 .filterSelection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: auto;
+  transition: 0.4s;
+}
+
+.filterSelection > span {
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.additions {
   background: var(--purple);
   border-radius: 25px;
   padding: 5px;
 
   display: flex;
   flex-wrap: wrap;
-
-  transition: 0.4s;
 }
 
 .inactive {

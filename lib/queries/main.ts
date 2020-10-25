@@ -20,11 +20,11 @@ function getQuery(filters: string[]): string {
 
     SELECT DISTINCT ?imdb ?title ?poster WHERE {
       ?film rdf:type media:Movie .
+      ?film media:full_title ?title .
+      ?film media:release_year ?year .
+      ?film media:runtime ?runtime .
       ?film imdb:id ?imdb .
-      ?film imdb:title ?title .
-      ?film imdb:year ?year .
       ?film imdb:rating ?rating .
-      ?film imdb:runtime ?runtime .
       ?film tmdb:poster ?poster .
       ${filters.join(" .\n")}
       MINUS {
@@ -51,7 +51,7 @@ const mainQuery = selector<string>({
     // Directors
     const directors = get(directorState);
     directors.value.forEach(({ imdb }) => {
-      filters.push(`?film imdb:director imn:${imdb}`)
+      filters.push(`?film media:has_director imn:${imdb}`)
     })
 
     // Rating

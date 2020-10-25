@@ -6,7 +6,7 @@ import Poster from "components/poster";
 import CurrentModal from "components/modals";
 import { Film } from "interfaces";
 import mainQueryState from "lib/queries/main"
-import { filmsState } from "lib/state"
+import { filmsState, loadingState } from "lib/state"
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useEffect } from 'react';
 import axios, { CancelTokenSource } from 'axios';
@@ -30,9 +30,11 @@ type Response = {
 
 const Home = () => {
   const [films, setFilms] = useRecoilState(filmsState)
+  const [loading, setLoading] = useRecoilState(loadingState)
   const query = useRecoilValue(mainQueryState)
 
   const loadFilms = (trackID: string, source: CancelTokenSource) => {
+    setLoading(true);
     axios.get<Response>(`http://localhost:7200/repositories/imdb?query=${query}`, {
       cancelToken: source.token,
       headers: {
@@ -52,6 +54,7 @@ const Home = () => {
       )
   
       setFilms(films);
+      setLoading(false);
     })
     .catch((err) => {
       if (!axios.isCancel(err)) {
@@ -103,6 +106,7 @@ const Home = () => {
         <CurrentModal />
       </div>
       <div className={styles.posters}>
+        {loading && <div className={styles.loading}>Loading...</div>}
         <div className={styles.posterGrid}>
           {
             films.map(
