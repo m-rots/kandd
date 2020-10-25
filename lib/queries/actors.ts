@@ -1,6 +1,7 @@
 import { atom, selector } from 'recoil';
 import axios from 'axios';
 import { Person } from 'interfaces/multiple';
+import { actorState } from 'lib/state';
 
 function getQuery(filters: string[]): string {
   return `PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -14,13 +15,18 @@ SELECT DISTINCT ?imdb ?name WHERE {
   ${filters.join(" .\n")}
 }
 ORDER BY ASC(?name)
-`;
+LIMIT 100`;
 }
 
 export const actorQueryState = selector<string>({
   key: "actorQuery",
   get: ({ get }) => {
     const filters = [];
+
+    const actors = get(actorState);
+    actors.value.forEach(({ imdb }) => {
+      filters.push(`MINUS { ?person imdb:id "${imdb}" }`)
+    })
 
     const search = get(actorSearchState);
     if (search !== "") {
@@ -54,7 +60,7 @@ export const actorResultsState = selector({
   get: async ({ get }) => {
     const query = get(actorQueryState);
     console.log(query);
-    
+
     const { data } = await axios.get<Response>("http://localhost:7200/repositories/imdb", {
       params: {
         query,

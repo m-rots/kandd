@@ -1,6 +1,7 @@
 import { atom, selector } from 'recoil';
 import axios from 'axios';
 import { Person } from 'interfaces/multiple';
+import { directorState } from 'lib/state';
 
 function getQuery(filters: string[]): string {
   return `PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -13,13 +14,19 @@ SELECT DISTINCT ?imdb ?name WHERE {
   ?person imdb:name ?name .
   ${filters.join(" .\n")}
 }
-ORDER BY ASC(?name)`;
+ORDER BY ASC(?name)
+LIMIT 100`;
 }
 
 export const directorQueryState = selector<string>({
   key: "directorQuery",
   get: ({ get }) => {
     const filters = [];
+
+    const directors = get(directorState);
+    directors.value.forEach(({ imdb }) => {
+      filters.push(`MINUS { ?person imdb:id "${imdb}" }`)
+    })
 
     const search = get(directorSearchState);
     if (search !== "") {

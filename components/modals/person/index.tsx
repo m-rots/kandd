@@ -1,8 +1,10 @@
 import Modal from 'components/modals/modal';
+import { Modal as ModalEnum } from 'interfaces'
 import { Person, Persons } from 'interfaces/multiple';
-import { RecoilState, RecoilValueReadOnly, useRecoilState, useRecoilValueLoadable } from 'recoil';
+import { RecoilState, RecoilValueReadOnly, useRecoilState, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
 import Individual from './individual';
 import styles from './index.module.css';
+import { modalState } from 'lib/state';
 
 type Props = {
   name: string,
@@ -12,6 +14,7 @@ type Props = {
 }
 
 const PersonModal = (props: Props) => {
+  const setModal = useSetRecoilState(modalState);
   const [search, setSearch] = useRecoilState(props.searchState);
   const results = useRecoilValueLoadable(props.resultState);
   const [persons, setPersons] = useRecoilState(props.state);
@@ -25,6 +28,9 @@ const PersonModal = (props: Props) => {
   }
 
   const editSelected = (person: Person) => {
+    setModal(ModalEnum.None)
+    setSearch("")
+    
     setPersons({
       selected: person.imdb,
       value: [
