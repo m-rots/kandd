@@ -51,13 +51,12 @@ const Summary = () => {
 
       <span className={styles.text}>
         I am looking for a<GenresFilter /> film
-        {' '}
         {filters
           .filter((filter) => filter() != null)
           .map((FilterBlock, index, me) => {
             return (
               <Fragment key={index}>
-                <FilterBlock />{seperator(me.length, index)}
+                {index == 0 ? " " : ""}<FilterBlock />{seperator(me.length, index)}
               </Fragment>
             )
           })}

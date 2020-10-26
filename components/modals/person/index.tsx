@@ -80,14 +80,14 @@ const PersonModal = (props: Props) => {
     const [gender, setGender] = useRecoilState(props.genderState)
     return (
       <div className={styles.genderSelect}>
+        <button className={buttonClass(gender == Gender.None)} onClick={() => setGender(Gender.None)}>
+          M/F
+        </button>
         <button className={buttonClass(gender == Gender.Female)} onClick={() => setGender(Gender.Female)}>
           Female
         </button>
         <button className={buttonClass(gender == Gender.Male)} onClick={() => setGender(Gender.Male)}>
           Male
-        </button>
-        <button className={buttonClass(gender == Gender.None)} onClick={() => setGender(Gender.None)}>
-          M/F
         </button>
       </div>
     )
