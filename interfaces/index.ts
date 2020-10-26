@@ -14,6 +14,12 @@ export enum Modal {
   Runtime,
 }
 
+export enum Gender {
+  None,
+  Female = "female",
+  Male = "male",
+}
+
 export const Genres = [
   "Action",
   "Adventure",

@@ -1,5 +1,6 @@
 import { AnimatePresence } from 'framer-motion';
 import { Genres, Modal } from 'interfaces';
+import { actorGenderState, actorResultsState, actorSearchState } from 'lib/queries/actors';
 import { directorResultsState, directorSearchState } from 'lib/queries/directors';
 import { useRecoilValue } from 'recoil';
 import RangeModal from './range';
@@ -14,7 +15,6 @@ import {
   releaseYearState,
   runtimeState,
 } from 'lib/state';
-import { actorResultsState, actorSearchState } from 'lib/queries/actors';
 
 const CurrentModal = () => {
   const modal = useRecoilValue(modalState)
@@ -34,6 +34,7 @@ const CurrentModal = () => {
         <PersonModal
           name="Actor"
           state={actorState}
+          genderState={actorGenderState}
           searchState={actorSearchState}
           resultState={actorResultsState}
         />
